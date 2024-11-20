@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "anime-rank-track"
+version = "1.0.0"
+description = "Track the anime ranks"
+authors = ["Hobr"]
+license = "GPL3.0"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+transitions = "^0.9.2"
+httpx = {extras = ["http2", "socks"], version = "^0.27.2"}
+hishel = "^0.1.1"
+fake-useragent = "^1.5.1"
+loguru = "^0.7.2"
+pyyaml = "^6.0.2"
+inquirer = "^3.4.0"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.7.4"
+
+[[tool.poetry.source]]
+name = "TUNA"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
