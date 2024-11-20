@@ -1,41 +1,55 @@
 {
-  description = "Python Shell";
+  description = "Rust Shell";
+
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     {
       self,
-      nixpkgs,
       flake-utils,
+      nixpkgs,
+      rust-overlay,
+      ...
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        overlays = [
+          rust-overlay.overlays.default
+          (final: prev: { rustToolchain = final.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml; })
+        ];
+        pkgs = import nixpkgs { inherit overlays system; };
       in
       {
-        devShell =
+        devShells.default =
           with pkgs;
           mkShell rec {
-            venvDir = ".venv";
-            packages =
-              with pkgs;
-              [
-                python312
-                poetry
-                stdenv.cc.cc.lib
-                pre-commit
-              ]
-              ++ (with pkgs.python312Packages; [
-                pip
-                venvShellHook
-              ]);
-            PIP_INDEX_URL = "https://pypi.tuna.tsinghua.edu.cn/simple";
-            PIP_TRUSTED_HOST = "pypi.tuna.tsinghua.edu.cn";
-            LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath packages;
+            nativeBuildInputs = [
+              pkg-config
+              libGL
+              clang
+              (lib.optionals stdenv.isLinux mold)
+            ];
+
+            buildInputs = [
+              rustToolchain
+            ];
+
+            shellHook = ''
+              export PATH="$PWD/${CARGO_HOME}/bin:$PATH"
+            '';
+
+            CARGO_HOME = builtins.toString ".cargo";
+            RUSTUP_HOME = builtins.toString ".rustup";
+            RUST_SRC_PATH = "${pkgs.rustToolchain}/lib/rustlib/src/rust/library";
+            LD_LIBRARY_PATH = "${lib.makeLibraryPath nativeBuildInputs}:/run/opengl-driver/lib:$LD_LIBRARY_PATH";
           };
       }
     );

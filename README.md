@@ -22,7 +22,8 @@
     - [ ] 配置
     - [ ] 数据库
 
-- [ ] 平台数据爬虫
+- [ ] 数据爬虫
+  - [ ] 规则定义
   - [ ] 状态机
 
 - [ ] 数据分析
@@ -33,29 +34,21 @@
 - [ ] 结果可视化
   - [ ] Excel
   - [ ] 图表
-  - [ ] GUI
   - [ ] 视频
 
 ## 使用
 
-- Python >=3.10,<3.14
+- Rust
 
 ```bash
 git clone https://github.com/Hobr/anime-rank-track
 cd anime-rank-track
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-pip install virtualenv poetry
-
-virtualenv venv
-source venv/script/activate
-python cli.py
 
 # 开发
-poetry install --with dev
 pre-commit install
-　
+
 # 更新
-poetry update
-pip freeze > requirements.txt
+cargo update
 pre-commit autoupdate
+nix flake update
 ```
