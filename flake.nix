@@ -33,8 +33,9 @@
           mkShell rec {
             nativeBuildInputs = [
               pkg-config
-              libGL
               clang
+              openssl
+              pre-commit
               (lib.optionals stdenv.isLinux mold)
             ];
 

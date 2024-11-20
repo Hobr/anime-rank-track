@@ -1,0 +1,16 @@
+[workspace]
+members = [
+    "util",
+    "spider",
+    "cli",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82.0"
+authors = ["Hobr<mail@hobr.site>"]
+description = "Track the anime ranks"
+license = "GPL-3.0"
+repository = "https://github.com/Hobr/anime-rank-track"

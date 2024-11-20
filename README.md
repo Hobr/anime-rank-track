@@ -44,6 +44,11 @@
 git clone https://github.com/Hobr/anime-rank-track
 cd anime-rank-track
 
+cargo install just
+just install
+cargo build
+cargo run
+
 # 开发
 pre-commit install
 
