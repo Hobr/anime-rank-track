@@ -1,10 +1,22 @@
-all: check fmt clippy
+build:
+  cargo build --workspace
 
-check:
-  cargo check --all-targets
+run:
+  cargo run
 
 fmt:
-  cargo fmt --all -- --check
+  pre-commit run --all-files
 
-clippy:
-  cargo clippy --all-targets
+install-dev:
+  pre-commit install
+  cargo install cargo-edit cargo-machete cargo-deny typos-cli cargo-nextest git-cliff --locked
+  cargo deny fetch
+
+machete:
+  cargo machete
+
+update:
+  cargo upgrade
+  cargo update
+  pre-commit autoupdate
+  nix flake update

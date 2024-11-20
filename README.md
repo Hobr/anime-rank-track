@@ -45,15 +45,16 @@ git clone https://github.com/Hobr/anime-rank-track
 cd anime-rank-track
 
 cargo install just
-just install
-cargo build
-cargo run
+
+# 运行
+just build
+just run
 
 # 开发
-pre-commit install
+just install-dev
+just fmt
+just machete
 
 # 更新
-cargo update
-pre-commit autoupdate
-nix flake update
+just update
 ```

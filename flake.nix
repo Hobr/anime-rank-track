@@ -35,12 +35,12 @@
               pkg-config
               clang
               openssl
-              pre-commit
               (lib.optionals stdenv.isLinux mold)
             ];
 
             buildInputs = [
               rustToolchain
+              pre-commit
             ];
 
             shellHook = ''
