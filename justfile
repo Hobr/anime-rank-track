@@ -1,8 +1,14 @@
 build:
   cargo build --workspace
 
+release:
+  cargo build --release
+
 run:
   cargo run
+
+check:
+  cargo check
 
 fmt:
   pre-commit run --all-files
@@ -12,11 +18,14 @@ install-dev:
   cargo install cargo-edit cargo-machete cargo-deny typos-cli cargo-nextest git-cliff --locked
   cargo deny fetch
 
-machete:
-  cargo machete
-
 update:
   cargo upgrade
   cargo update
   pre-commit autoupdate
   nix flake update
+
+machete:
+  cargo machete
+
+doc:
+  cargo doc --open

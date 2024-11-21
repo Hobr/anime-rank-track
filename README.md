@@ -52,9 +52,13 @@ just run
 
 # 开发
 just install-dev
+cargo check
 just fmt
 just machete
 
 # 更新
 just update
+
+# 发布
+just release
 ```
