@@ -51,8 +51,9 @@ just build
 just run
 
 # 开发
+pip install pre-commit
 just install-dev
-cargo check
+just check
 just fmt
 just machete
 
