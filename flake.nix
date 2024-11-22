@@ -23,34 +23,49 @@
       let
         overlays = [
           rust-overlay.overlays.default
-          (final: prev: { rustToolchain = final.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml; })
+          (final: prev: {
+            rustToolchain =
+              let
+                rust = prev.rust-bin;
+              in
+              if builtins.pathExists ./rust-toolchain.toml then
+                rust.fromRustupToolchainFile ./rust-toolchain.toml
+              else if builtins.pathExists ./rust-toolchain then
+                rust.fromRustupToolchainFile ./rust-toolchain
+              else
+                rust.stable.latest.default.override {
+                  channel = "1.82.0";
+                  extensions = [
+                    "rust-src"
+                    "rustfmt"
+                    "rust-analyzer"
+                    "clippy"
+                    "cargo"
+                  ];
+                };
+          })
         ];
         pkgs = import nixpkgs { inherit overlays system; };
       in
       {
         devShells.default =
           with pkgs;
-          mkShell rec {
-            nativeBuildInputs = [
+          mkShell {
+            packages = [
               pkg-config
               clang
               openssl
+              pre-commit
+              rustToolchain
               (lib.optionals stdenv.isLinux mold)
             ];
 
-            buildInputs = [
-              rustToolchain
-              pre-commit
-            ];
-
-            shellHook = ''
-              export PATH="$PWD/${CARGO_HOME}/bin:$PATH"
-            '';
-
-            CARGO_HOME = builtins.toString ".cargo";
-            RUSTUP_HOME = builtins.toString ".rustup";
-            RUST_SRC_PATH = "${pkgs.rustToolchain}/lib/rustlib/src/rust/library";
-            LD_LIBRARY_PATH = "${lib.makeLibraryPath nativeBuildInputs}:/run/opengl-driver/lib:$LD_LIBRARY_PATH";
+            env = rec {
+              CARGO_HOME = builtins.toString ".cargo";
+              RUSTUP_HOME = builtins.toString ".rustup";
+              PATH = "$PWD/${CARGO_HOME}/bin:$PATH";
+              RUST_SRC_PATH = "${pkgs.rustToolchain}/lib/rustlib/src/rust/library";
+            };
           };
       }
     );
