@@ -55,6 +55,7 @@ pip install pre-commit
 just install-dev
 just check
 just fmt
+just doc
 just machete
 
 # 更新

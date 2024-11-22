@@ -28,4 +28,4 @@ machete:
   cargo machete
 
 doc:
-  cargo doc --open
+  cargo doc --open --workspace --all-features
