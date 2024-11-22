@@ -50,7 +50,7 @@
       {
         devShells.default =
           with pkgs;
-          mkShell {
+          mkShell rec {
             packages = [
               pkg-config
               clang
@@ -60,12 +60,15 @@
               (lib.optionals stdenv.isLinux mold)
             ];
 
-            env = rec {
+            env = {
               CARGO_HOME = builtins.toString ".cargo";
               RUSTUP_HOME = builtins.toString ".rustup";
-              PATH = "$PWD/${CARGO_HOME}/bin:$PATH";
               RUST_SRC_PATH = "${pkgs.rustToolchain}/lib/rustlib/src/rust/library";
             };
+
+            shellHook = ''
+              export PATH="$PWD/${env.CARGO_HOME}/bin:$PATH"
+            '';
           };
       }
     );
