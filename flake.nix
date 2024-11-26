@@ -54,10 +54,10 @@
             packages = [
               pkg-config
               clang
+              mold
               openssl
               pre-commit
               rustToolchain
-              (lib.optionals stdenv.isLinux mold)
             ];
 
             env = {
@@ -68,6 +68,7 @@
 
             shellHook = ''
               export PATH="$PWD/${env.CARGO_HOME}/bin:$PATH"
+              export RUSTFLAGS="-C link-arg=-fuse-ld=mold"
             '';
           };
       }
