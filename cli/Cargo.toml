@@ -11,6 +11,7 @@ repository.workspace = true
 [dependencies]
 util = { path = "../util" }
 spider = { path = "../spider" }
+clap = { version = "4.5.21", features = ["derive", "env", "unicode", "wrap_help"] }
 reqwest = { version = "0.12", features = ["json"] }
 rayon = "1.10"
 config = "0.14.1"
