@@ -23,6 +23,7 @@ update:
   cargo update
   pre-commit autoupdate
   nix flake update
+  pre-commit install
 
 machete:
   cargo machete
