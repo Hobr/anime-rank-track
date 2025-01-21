@@ -11,11 +11,11 @@ repository.workspace = true
 [dependencies]
 util = { path = "../util" }
 spider = { path = "../spider" }
-clap = { version = "4.5.23", features = ["derive", "env", "unicode", "wrap_help"] }
+clap = { version = "4.5.27", features = ["derive", "env", "unicode", "wrap_help"] }
 reqwest = { version = "0.12", features = ["json"] }
 rayon = "1.10"
 config = "0.14.1"
-tokio = { version = "1.42.0", features = ["full"] }
+tokio = { version = "1.43.0", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = "0.3"
 miette = { version = "7.4.0", features = ["fancy"] }
