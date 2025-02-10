@@ -15,7 +15,7 @@ fmt:
 
 install-dev:
   pre-commit install
-  cargo install cargo-edit cargo-machete cargo-deny typos-cli cargo-nextest git-cliff --locked
+  cargo install cargo-edit cargo-machete cargo-deny typos-cli cargo-nextest git-cliff --locked --force
   cargo deny fetch
 
 update:
