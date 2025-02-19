@@ -34,7 +34,7 @@
                 rust.fromRustupToolchainFile ./rust-toolchain
               else
                 rust.stable.latest.default.override {
-                  channel = "1.82.0";
+                  channel = "1.84.1";
                   extensions = [
                     "rust-src"
                     "rustfmt"
